@@ -2,6 +2,8 @@
 
 #include "raylib.h"
 
+// Base class for things like player ships, enemies and projectiles.
+
 class Actor
 {
 
@@ -42,6 +44,8 @@ public:
 
 	void Turn(float turningRate, float delta);
 
+	void TakeDamage(int dmgTaken);	// Take the specified amount of damage to the actor's health. If health goes to or below 0, the actor goes to it's death state.
+
 protected:
 	Vector2 size = { 32, 32 }; // The size of the actor
 	Vector2 pos = { 0, 0 };	// The current position of the object
@@ -52,7 +56,9 @@ protected:
 	float angle = 0.0f; // Which way the actor is facing
 	float acceleration = 1500.0f; // How fast the actor can accelerate
 	float damping = 6.5f; // 
-	bool active = false;
+	bool active = false;		// When true, update the actor (movement, collision, drawing etc). When false, do nothing with it, as if it didn't exist during gameplay, generally waiting to be deleted or replaced.
+	int maxHealth = 100;		// The maximum amount of health the actor can have.
+	int health = 100;			// The current health of the actor. Shouldn't go above maxHealth under normal conditions. Dropping to 0 or below causes the actor to go to it's death state.
 
 private:
 

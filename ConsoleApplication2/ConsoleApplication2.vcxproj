@@ -144,15 +144,21 @@
   <ItemGroup>
     <ClCompile Include="ConsoleApplication2.cpp" />
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="Weapon.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ConsoleApplication2.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

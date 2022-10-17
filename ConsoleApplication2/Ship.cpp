@@ -13,11 +13,6 @@ void Ship::Attack()
 	//std::cout << "Pew";
 }
 
-void Ship::TakeDamage(int dmgTaken)
-{
-	health =- dmgTaken;
-}
-
 void Ship::Tick(float delta)
 {
 	pos.x += velocity.x * delta;

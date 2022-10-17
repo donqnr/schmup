@@ -94,3 +94,8 @@ void Actor::Turn(float turnRate, float delta)
 {
 	RotateBy(turnRate * delta);
 }
+
+void Actor::TakeDamage(int dmgTaken)
+{
+	health = -dmgTaken;
+}
