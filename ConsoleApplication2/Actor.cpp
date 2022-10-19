@@ -38,12 +38,12 @@ float Actor::GetDamping()
 	return damping;
 }
 
-bool Actor::isActive()
+bool Actor::IsActive()
 {
 	return active;
 }
 
-void Actor::setActive(bool a)
+void Actor::SetActive(bool a)
 {
 	active = a;
 }

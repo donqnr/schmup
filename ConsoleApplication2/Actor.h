@@ -26,9 +26,9 @@ public:
 
 	float GetDamping(); // Return the current damping value of the actor
 
-	bool isActive(); // 
+	bool IsActive(); // 
 
-	void setActive(bool a);
+	void SetActive(bool a);
 
 	void MoveTo(float posX, float posY);	// Set the position of the object to the specified coordinates
 

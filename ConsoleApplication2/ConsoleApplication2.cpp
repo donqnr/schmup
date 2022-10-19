@@ -19,6 +19,7 @@
 #include "Actor.h"
 #include "Ship.h"
 #include "Projectile.h"
+#include "Enemy.h"
 
 
 
@@ -41,7 +42,12 @@ int main(void)
 
     Projectile* projectiles[1028]{};
 
+    Enemy* enemies[1028]{};
+
     Ship thing(screenWidth * 0.5, screenHeight * 0.8);
+
+    Enemy badguy1(screenWidth * 0.3, screenHeight * 0.2);
+    badguy1.SetActive(true);
 
     Texture2D triangle = LoadTexture("resources/triangle.png");
 
@@ -70,7 +76,7 @@ int main(void)
 
         for (int i = 0; i < std::size(projectiles); i++) {
             if (projectiles[i] != nullptr) {
-                if (projectiles[i]->isActive()) {
+                if (projectiles[i]->IsActive()) {
                     projectiles[i]->Tick(deltaTime);
                 }
             }
@@ -91,18 +97,18 @@ int main(void)
             
             for (int i = 0; i < std::size(projectiles); i++) {
                 if (projectiles[i] != nullptr) {
-                    if (!projectiles[i]->isActive()) {
+                    if (!projectiles[i]->IsActive()) {
                         delete projectiles[i];
                         projectiles[i] = new Projectile(thing.GetRect().x, thing.GetRect().y);
                         projectiles[i]->setParent(&thing);
-                        projectiles[i]->setActive(true);
+                        projectiles[i]->SetActive(true);
                         break;
                     }
                 }
                 else if (projectiles[i] == nullptr) {
                     projectiles[i] = new Projectile(thing.GetRect().x, thing.GetRect().y);
                     projectiles[i]->setParent(&thing);
-                    projectiles[i]->setActive(true);
+                    projectiles[i]->SetActive(true);
                     break;
                 }
             }
@@ -128,15 +134,22 @@ int main(void)
         
         for (int i = 0; i < std::size(projectiles); i++) {
             if (projectiles[i] != nullptr) {
-                if (projectiles[i]->isActive()) {
+                if (projectiles[i]->IsActive()) {
                     DrawRectangleRec(projectiles[i]->GetRect(), RED);
 
-                    if (CheckCollisionRecs(thing.GetRect(), projectiles[i]->GetRect())) {
+                    if (badguy1.IsActive() && CheckCollisionRecs(badguy1.GetRect(), projectiles[i]->GetRect())) {
                         DrawText("POW! HAHA!", 200, 260, 20, BLACK);
+                        badguy1.SetActive(false);
+                        projectiles[i]->SetActive(false);
                     }
                 }
             }
         }
+
+        if (badguy1.IsActive()) {
+            DrawRectangleRec(badguy1.GetRect(), ORANGE);
+        }
+
         DrawTexturePro(triangle,
             sourceRec,
             { 
