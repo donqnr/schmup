@@ -38,7 +38,7 @@ public:
 
 	void RotateBy(float newAngle);
 
-	void Tick(float delta); // What gets called every frame the actor is active
+	virtual void Tick(float delta); // What gets called every frame the actor is active
 
 	void Accelerate(Vector2 acc, float delta); 
 

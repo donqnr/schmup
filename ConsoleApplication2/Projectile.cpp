@@ -5,6 +5,7 @@ Projectile::Projectile(float posX, float posY)
 	pos = { posX,posY };
 	velocity = { 0,0 };
 	rect = { posX, posY, 8, 8 };
+	spawnTime = GetTime();
 }
 
 void Projectile::Tick(float delta)

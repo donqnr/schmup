@@ -6,8 +6,17 @@
 
 class Weapon
 {
+public:
+	Weapon();
+
+	bool CanFire();
+
+	void Fire();
+
 private:
 	Projectile projectile; // Which projetile the weapon fires
-	float firerate = 0.5; // Cooldown time in seconds between shots
+	float firerate = 0.1f; // Cooldown time in seconds between shots
+	float lastFiredAt = 0.0f;
+	bool firing = false;
 };
 

@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="ConsoleApplication2.cpp" />
     <ClCompile Include="Actor.cpp" />
+    <ClCompile Include="EmptyWeapon.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ship.cpp" />
@@ -151,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
+    <ClInclude Include="EmptyWeapon.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="resource.h" />

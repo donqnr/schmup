@@ -13,6 +13,7 @@
 *
 ********************************************************************************************/
 
+#include <memory>
 #include <iostream>
 #include "raylib.h"
 #include "raymath.h"
@@ -21,11 +22,33 @@
 #include "Projectile.h"
 #include "Enemy.h"
 
+Actor* projectiles[1028]{};
 
+Enemy* enemies[1028]{};
 
 //------------------------------------------------------------------------------------------
 // Types and Structures Definition
 //------------------------------------------------------------------------------------------
+
+void SpawnProjectile(float posX, float posY) {
+    for (int i = 0; i < std::size(projectiles); i++) {
+        if (projectiles[i] != nullptr) {    // Checking for null pointers so they aren't referenced
+            if (!projectiles[i]->IsActive()) {
+                delete projectiles[i];
+                projectiles[i] = new Projectile(posX, posY);
+                //projectiles[i]->setParent(&thing);
+                projectiles[i]->SetActive(true);
+                break;
+            }
+        }
+        else if (projectiles[i] == nullptr) {
+            projectiles[i] = new Projectile(posX, posY);
+            //projectiles[i]->setParent(&thing);
+            projectiles[i]->SetActive(true);
+            break;
+        }
+    }
+}
 
 //------------------------------------------------------------------------------------------
 // Main entry point
@@ -38,13 +61,12 @@ int main(void)
     const int screenWidth = 1280;
     const int screenHeight = 720;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic screen manager");
+    InitWindow(screenWidth, screenHeight, "gaem");
 
-    Projectile* projectiles[1028]{};
-
-    Enemy* enemies[1028]{};
+    Weapon wep1;
 
     Ship thing(screenWidth * 0.5, screenHeight * 0.8);
+    thing.SetWeapon(wep1, 0);
 
     Enemy badguy1(screenWidth * 0.3, screenHeight * 0.2);
     badguy1.SetActive(true);
@@ -57,8 +79,6 @@ int main(void)
     Rectangle sourceRec = { 0.0f, 0.0f, (float)frameWidth, (float)frameHeight };
 
     Vector2 origin = { (float)frameWidth / 2, (float)frameHeight / 2 };
-
-    bool isColliding = false;
 
     // TODO: Initialize all required variables and load all required data here!
 
@@ -93,24 +113,16 @@ int main(void)
 
         if (IsKeyDown(KEY_LEFT_CONTROL))
         {
-            thing.Attack();
             
-            for (int i = 0; i < std::size(projectiles); i++) {
-                if (projectiles[i] != nullptr) {
-                    if (!projectiles[i]->IsActive()) {
-                        delete projectiles[i];
-                        projectiles[i] = new Projectile(thing.GetRect().x, thing.GetRect().y);
-                        projectiles[i]->setParent(&thing);
-                        projectiles[i]->SetActive(true);
-                        break;
-                    }
-                }
-                else if (projectiles[i] == nullptr) {
-                    projectiles[i] = new Projectile(thing.GetRect().x, thing.GetRect().y);
-                    projectiles[i]->setParent(&thing);
-                    projectiles[i]->SetActive(true);
-                    break;
-                }
+            if (thing.GetWeapon(0)->CanFire()) {
+                SpawnProjectile(thing.GetPosition().x + thing.GetWeaponOffset(0)->x,
+                    thing.GetPosition().y + thing.GetWeaponOffset(0)->y);
+                thing.GetWeapon(0)->Fire();
+            }
+            if (thing.GetWeapon(1)->CanFire()) {
+                SpawnProjectile(thing.GetPosition().x + thing.GetWeaponOffset(1)->x,
+                    thing.GetPosition().y + thing.GetWeaponOffset(1)->y);
+                thing.GetWeapon(1)->Fire();
             }
         }
 
@@ -139,7 +151,7 @@ int main(void)
 
                     if (badguy1.IsActive() && CheckCollisionRecs(badguy1.GetRect(), projectiles[i]->GetRect())) {
                         DrawText("POW! HAHA!", 200, 260, 20, BLACK);
-                        badguy1.SetActive(false);
+                        //badguy1.SetActive(false);
                         projectiles[i]->SetActive(false);
                     }
                 }
@@ -178,3 +190,4 @@ int main(void)
 
     return 0;
 }
+
