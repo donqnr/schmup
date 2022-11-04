@@ -14,7 +14,7 @@ public:
 
 	void Tick(float delta);
 
-	void SetWeapon(Weapon wpn, int wpnSlot);
+	void SetWeapon(Weapon* wpn, int wpnSlot);
 
 	Vector2* GetWeaponOffset(int slot);
 
@@ -26,9 +26,9 @@ protected:
 
 	struct WeaponSlot {			// Where the ship's regular weapons go
 		Vector2 offset = { 0,0 };	// The position where the bullets spawn from, relative to the ship. 0,0 is the center of the ship.
-		Weapon wep;				// The weapon class
+		Weapon* wep;				// The weapon class
 	};
-	WeaponSlot weapons[2];		// Array for the weapon slots, different ships can have a varying amount of equippable weapons
+	WeaponSlot weapons[3];		// Array for the weapon slots, different ships can have a varying amount of equippable weapons
 
 private:
 

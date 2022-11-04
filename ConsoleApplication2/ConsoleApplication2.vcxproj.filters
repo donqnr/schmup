@@ -16,6 +16,12 @@
     <Filter Include="Weapons">
       <UniqueIdentifier>{361b606f-f69b-42bf-af71-4383d25c08af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Weapons">
+      <UniqueIdentifier>{0067e848-e09d-4b10-9316-78396aa38273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Weapons">
+      <UniqueIdentifier>{824faad5-5b54-4203-91bc-7e25e5ec9434}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication2.cpp">
@@ -36,8 +42,11 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HeavyMachineGun.cpp">
+      <Filter>Source Files\Weapons</Filter>
+    </ClCompile>
     <ClCompile Include="EmptyWeapon.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Weapons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +68,11 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HeavyMachineGun.h">
+      <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
     <ClInclude Include="EmptyWeapon.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Weapons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

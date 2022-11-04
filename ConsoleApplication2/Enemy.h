@@ -15,5 +15,7 @@ private:
         Death,
     };
     State currentState = State::Wait;
+
+    Actor* target;
 };
 

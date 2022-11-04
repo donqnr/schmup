@@ -12,6 +12,8 @@ public:
 
 	Vector2 GetPosition();	// Return the current position of the actor
 
+	Vector2 GetCenter(); 
+
 	Vector2 GetVelocity();	// Return the current velocity of the actor
 
 	Vector2 GetSize();	// Return the current size of the actor

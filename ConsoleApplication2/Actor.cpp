@@ -13,6 +13,11 @@ Vector2 Actor::GetPosition()
 	return pos;
 }
 
+Vector2 Actor::GetCenter()
+{
+	return {pos.x + (size.x * 0.5f),pos.y + (size.y * 0.5f)};
+}
+
 Vector2 Actor::GetVelocity()
 {
 	return velocity;

@@ -6,8 +6,11 @@ Ship::Ship(float posX, float posY)
 	pos = { posX,posY };
 	velocity = { 0,0 };
 	rect = { posX, posY, 32, 32 };
-	weapons[0].offset = { 0, 16 };
-	weapons[1].offset = { 24, 16 };
+	weapons[0].offset = { 0, 0 };
+	weapons[1].offset = { 32, 0 };
+	weapons[2].offset = { 16, 0 };
+
+
 }
 
 void Ship::StartAttack()
@@ -28,11 +31,10 @@ void Ship::Tick(float delta)
 	rect = { pos.x, pos.y, size.x, size.y };
 }
 
-void Ship::SetWeapon(Weapon wpn, int wpnSlot)
+void Ship::SetWeapon(Weapon* wpn, int wpnSlot)
 {
-	if (wpnSlot < std::size(weapons) && wpnSlot >= 0) {
-		weapons[wpnSlot].wep = wpn;
-	}
+	weapons[wpnSlot].wep = wpn;
+	std::cout << "cock";
 }
 
 Vector2* Ship::GetWeaponOffset(int slot)
@@ -51,5 +53,10 @@ Weapon* Ship::GetWeapons()
 
 Weapon* Ship::GetWeapon(int slot)
 {
-	return &weapons[slot].wep;
+	return weapons[slot].wep;
+}
+
+int Ship::GetWeaponAmount()
+{
+	return std::size(weapons);
 }

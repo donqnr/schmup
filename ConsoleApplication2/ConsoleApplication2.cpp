@@ -21,6 +21,7 @@
 #include "Ship.h"
 #include "Projectile.h"
 #include "Enemy.h"
+#include "HeavyMachineGun.h"
 
 Actor* projectiles[1028]{};
 
@@ -35,14 +36,14 @@ void SpawnProjectile(float posX, float posY) {
         if (projectiles[i] != nullptr) {    // Checking for null pointers so they aren't referenced
             if (!projectiles[i]->IsActive()) {
                 delete projectiles[i];
-                projectiles[i] = new Projectile(posX, posY);
+                projectiles[i] = new Projectile(posX - 4, posY);
                 //projectiles[i]->setParent(&thing);
                 projectiles[i]->SetActive(true);
                 break;
             }
         }
         else if (projectiles[i] == nullptr) {
-            projectiles[i] = new Projectile(posX, posY);
+            projectiles[i] = new Projectile(posX - 4, posY);
             //projectiles[i]->setParent(&thing);
             projectiles[i]->SetActive(true);
             break;
@@ -63,10 +64,15 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "gaem");
 
-    Weapon wep1;
+    HeavyMachineGun wep1;
+    HeavyMachineGun wep2;
+
+    Weapon* gun = new HeavyMachineGun();
 
     Ship thing(screenWidth * 0.5, screenHeight * 0.8);
-    thing.SetWeapon(wep1, 0);
+    thing.SetWeapon(gun, 0);
+    thing.SetWeapon(&wep2, 1);
+    thing.SetWeapon(&wep1, 2);
 
     Enemy badguy1(screenWidth * 0.3, screenHeight * 0.2);
     badguy1.SetActive(true);
@@ -114,15 +120,14 @@ int main(void)
         if (IsKeyDown(KEY_LEFT_CONTROL))
         {
             
-            if (thing.GetWeapon(0)->CanFire()) {
-                SpawnProjectile(thing.GetPosition().x + thing.GetWeaponOffset(0)->x,
-                    thing.GetPosition().y + thing.GetWeaponOffset(0)->y);
-                thing.GetWeapon(0)->Fire();
-            }
-            if (thing.GetWeapon(1)->CanFire()) {
-                SpawnProjectile(thing.GetPosition().x + thing.GetWeaponOffset(1)->x,
-                    thing.GetPosition().y + thing.GetWeaponOffset(1)->y);
-                thing.GetWeapon(1)->Fire();
+            for (int i = 0; i < thing.GetWeaponAmount(); i++) {
+                if (thing.GetWeapon(i)->CanFire()) {
+                    SpawnProjectile(
+                        thing.GetPosition().x + thing.GetWeaponOffset(i)->x,
+                        thing.GetPosition().y + thing.GetWeaponOffset(i)->y
+                    );
+                    thing.GetWeapon(i)->Fire();
+                }
             }
         }
 

@@ -146,6 +146,7 @@
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="EmptyWeapon.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="HeavyMachineGun.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="EmptyWeapon.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="HeavyMachineGun.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Ship.h" />

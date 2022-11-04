@@ -9,14 +9,17 @@ class Weapon
 public:
 	Weapon();
 
-	bool CanFire();
+	virtual bool CanFire();
 
-	void Fire();
+	virtual void Fire();
 
-private:
+protected:
 	Projectile projectile; // Which projetile the weapon fires
-	float firerate = 0.1f; // Cooldown time in seconds between shots
+	float firerate = 0.5f; // Cooldown time in seconds between shots
 	float lastFiredAt = 0.0f;
 	bool firing = false;
+
+private:
+
 };
 
