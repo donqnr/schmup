@@ -8,6 +8,8 @@ public:
 
     void Tick(float delta);
 
+    void TakeDamage(int dmgTaken);
+
 private:
     enum State {
         Wait,

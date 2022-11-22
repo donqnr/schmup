@@ -23,12 +23,17 @@
 #include "Enemy.h"
 #include "HeavyMachineGun.h"
 
-Actor* projectiles[1028]{};
+Actor *projectiles[2048]{};
 
-Enemy* enemies[1028]{};
+Enemy *enemies[2048]{};
+
+struct Obstacle {
+    Rectangle rect = { 0, 0, 0 ,0 }; // Rectangle for collision detection
+
+};
 
 //------------------------------------------------------------------------------------------
-// Types and Structures Definition
+// Functions
 //------------------------------------------------------------------------------------------
 
 void SpawnProjectile(float posX, float posY) {
@@ -48,6 +53,9 @@ void SpawnProjectile(float posX, float posY) {
             projectiles[i]->SetActive(true);
             break;
         }
+        else {
+
+        }
     }
 }
 
@@ -56,83 +64,120 @@ void SpawnProjectile(float posX, float posY) {
 //------------------------------------------------------------------------------------------
 int main(void)
 {
-    // Initialization
-    //--------------------------------------------------------------------------------------
+// Initialization
+//--------------------------------------------------------------------------------------
 
-    const int screenWidth = 1280;
-    const int screenHeight = 720;
+const int screenWidth = 1280;
+const int screenHeight = 720;
 
-    InitWindow(screenWidth, screenHeight, "gaem");
+InitWindow(screenWidth, screenHeight, "gaem");
 
-    HeavyMachineGun wep1;
-    HeavyMachineGun wep2;
+Obstacle o1;
+o1.rect = { 256, 400, 512, 64 };
 
-    Weapon* gun = new HeavyMachineGun();
+HeavyMachineGun wep1;
+HeavyMachineGun wep2;
 
-    Ship thing(screenWidth * 0.5, screenHeight * 0.8);
-    thing.SetWeapon(gun, 0);
-    thing.SetWeapon(&wep2, 1);
-    thing.SetWeapon(&wep1, 2);
+Weapon* gun = new HeavyMachineGun();
 
-    Enemy badguy1(screenWidth * 0.3, screenHeight * 0.2);
-    badguy1.SetActive(true);
+Ship thing(screenWidth * 0.5, screenHeight * 0.8);
+thing.SetWeapon(gun, 0);
+thing.SetWeapon(&wep2, 1);
+thing.SetWeapon(&wep1, 2);
 
-    Texture2D triangle = LoadTexture("resources/triangle.png");
+Enemy badguy1(screenWidth * 0.3, screenHeight * 0.2);
+badguy1.SetActive(true);
 
-    int frameWidth = triangle.width;
-    int frameHeight = triangle.height;
+Texture2D triangle = LoadTexture("resources/triangle.png");
 
-    Rectangle sourceRec = { 0.0f, 0.0f, (float)frameWidth, (float)frameHeight };
+int frameWidth = triangle.width;
+int frameHeight = triangle.height;
 
-    Vector2 origin = { (float)frameWidth / 2, (float)frameHeight / 2 };
+Rectangle sourceRec = { 0.0f, 0.0f, (float)frameWidth, (float)frameHeight };
 
-    // TODO: Initialize all required variables and load all required data here!
+Vector2 origin = { (float)frameWidth / 2, (float)frameHeight / 2 };
 
-    SetTargetFPS(480);               // Set the framerate cap to a high number, the intention is for the game to behave the same regardless of the framerate.
-    //--------------------------------------------------------------------------------------
+// TODO: Initialize all required variables and load all required data here!
 
-    // Main game loop
-    while (!WindowShouldClose())    // Detect window close button or ESC key
+SetTargetFPS(10000);               // Set the framerate cap to a high number, the intention is for the game to behave the same regardless of the framerate.
+//--------------------------------------------------------------------------------------
+
+// Main game loop
+while (!WindowShouldClose())    // Detect window close button or ESC key
+{
+    // Update
+    //----------------------------------------------------------------------------------
+    float deltaTime = GetFrameTime();
+
+    thing.Tick(deltaTime);
+
+    badguy1.Tick(deltaTime);
+
+    for (int i = 0; i < std::size(projectiles); i++) {
+        if (projectiles[i] != nullptr) {
+            if (projectiles[i]->IsActive()) {
+                projectiles[i]->Tick(deltaTime);
+            }
+        }
+
+    }
+
+
+    if (IsKeyDown(KEY_RIGHT)) thing.Accelerate({ thing.GetAcceleration(), 0.0f }, deltaTime);
+    if (IsKeyDown(KEY_LEFT)) thing.Accelerate({ -thing.GetAcceleration(), 0.0f }, deltaTime);
+    if (IsKeyDown(KEY_UP)) thing.Accelerate({ 0.0f, -thing.GetAcceleration() }, deltaTime);
+    if (IsKeyDown(KEY_DOWN)) thing.Accelerate({ 0.0f, thing.GetAcceleration() }, deltaTime);
+    if (IsKeyDown(KEY_A)) thing.Turn(-250, deltaTime);
+    if (IsKeyDown(KEY_D)) thing.Turn(250, deltaTime);
+
+    if (IsKeyDown(KEY_LEFT_CONTROL))
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        float deltaTime = GetFrameTime();
 
-        thing.Tick(deltaTime);
-
-        for (int i = 0; i < std::size(projectiles); i++) {
-            if (projectiles[i] != nullptr) {
-                if (projectiles[i]->IsActive()) {
-                    projectiles[i]->Tick(deltaTime);
-                }
+        for (int i = 0; i < thing.GetWeaponAmount(); i++) { // Player firing his weapons
+            if (thing.GetWeapon(i)->CanFire()) {
+                SpawnProjectile(
+                    thing.GetPosition().x + thing.GetWeaponOffset(i)->x,
+                    thing.GetPosition().y + thing.GetWeaponOffset(i)->y
+                );
+                thing.GetWeapon(i)->Fire();
             }
-
         }
-        
+    }
 
-        if (IsKeyDown(KEY_RIGHT)) thing.Accelerate({ thing.GetAcceleration(), 0.0f}, deltaTime);
-        if (IsKeyDown(KEY_LEFT)) thing.Accelerate({ -thing.GetAcceleration(), 0.0f }, deltaTime);
-        if (IsKeyDown(KEY_UP)) thing.Accelerate({ 0.0f, -thing.GetAcceleration() }, deltaTime);
-        if (IsKeyDown(KEY_DOWN)) thing.Accelerate({ 0.0f, thing.GetAcceleration() }, deltaTime);
-        if (IsKeyDown(KEY_A)) thing.Turn(-250, deltaTime);
-        if (IsKeyDown(KEY_D)) thing.Turn(250, deltaTime);
+    // Collision between projectiles and enemies
+    for (int i = 0; i < std::size(projectiles); i++) {
+        if (projectiles[i] != nullptr) {    // Check for a null pointer, so it won't get referenced
+            if (projectiles[i]->IsActive()) {
+                DrawRectangleRec(projectiles[i]->GetRect(), RED);
 
-        if (IsKeyDown(KEY_LEFT_CONTROL))
-        {
-            
-            for (int i = 0; i < thing.GetWeaponAmount(); i++) {
-                if (thing.GetWeapon(i)->CanFire()) {
-                    SpawnProjectile(
-                        thing.GetPosition().x + thing.GetWeaponOffset(i)->x,
-                        thing.GetPosition().y + thing.GetWeaponOffset(i)->y
-                    );
-                    thing.GetWeapon(i)->Fire();
+                if (badguy1.IsActive() && CheckCollisionRecs(badguy1.GetRect(), projectiles[i]->GetRect())) {
+                    //badguy1.SetActive(false);
+                    badguy1.TakeDamage(5);
+                    projectiles[i]->SetActive(false);
                 }
             }
         }
+    }
 
-        
-  
+    //Collision between players and the environment
+    if (CheckCollisionRecs(thing.GetWallSensorUp(), o1.rect)) {
+        thing.SetPosition({ thing.GetPosition().x,o1.rect.y + o1.rect.height});
+        thing.SetVelocity({ thing.GetVelocity().x, -thing.GetVelocity().y * 1.2f});
+    }
+    if (CheckCollisionRecs(thing.GetWallSensorDn(), o1.rect)) {
+        thing.SetPosition({ thing.GetPosition().x,o1.rect.y - thing.GetRect().height - 1});
+        thing.SetVelocity({ thing.GetVelocity().x, -thing.GetVelocity().y * 1.2f });
+    }
+    if (CheckCollisionRecs(thing.GetWallSensorLeft(), o1.rect)) {
+        thing.SetPosition({ o1.rect.x + o1.rect.width,thing.GetPosition().y });
+        thing.SetVelocity({ -thing.GetVelocity().x * 1.2f, thing.GetVelocity().y });
+    }
+    if (CheckCollisionRecs(thing.GetWallSensorRight(), o1.rect)) {
+        thing.SetPosition({ o1.rect.x - thing.GetRect().width - 1,thing.GetPosition().y});
+        thing.SetVelocity({ -thing.GetVelocity().x * 1.2f, thing.GetVelocity().y });
+    }
+
+
         //----------------------------------------------------------------------------------
 
         // Draw
@@ -141,45 +186,48 @@ int main(void)
 
         ClearBackground(RAYWHITE);
 
-        DrawTriangle(
-            Vector2{ 20,20 },
-            Vector2{ 20,40 },
-            Vector2{ 40,20 },
-            RED);
-
         //DrawTexture(triangle, thing.GetPosition().x, thing.GetPosition().y, WHITE);
-        
-        for (int i = 0; i < std::size(projectiles); i++) {
-            if (projectiles[i] != nullptr) {
-                if (projectiles[i]->IsActive()) {
-                    DrawRectangleRec(projectiles[i]->GetRect(), RED);
 
-                    if (badguy1.IsActive() && CheckCollisionRecs(badguy1.GetRect(), projectiles[i]->GetRect())) {
-                        DrawText("POW! HAHA!", 200, 260, 20, BLACK);
-                        //badguy1.SetActive(false);
-                        projectiles[i]->SetActive(false);
-                    }
-                }
-            }
-        }
+        DrawRectangleRec(thing.GetWallSensorUp(), RED);
+        DrawRectangleRec(thing.GetWallSensorDn(), RED);
+        DrawRectangleRec(thing.GetWallSensorLeft(), RED);
+        DrawRectangleRec(thing.GetWallSensorRight(), RED);
 
+        // Draw environment and obstacles
+        DrawRectangleRec(o1.rect, RED);
+
+        // Draw enemies
         if (badguy1.IsActive()) {
             DrawRectangleRec(badguy1.GetRect(), ORANGE);
         }
 
+        // Draw Player
         DrawTexturePro(triangle,
             sourceRec,
-            { 
+            {
                 thing.GetRect().x + 16,
                 thing.GetRect().y + 16,
                 thing.GetRect().width,
-                thing.GetRect().height 
+                thing.GetRect().height
             },
             { 16 , 16 },
             thing.GetAngle(),
             WHITE);
 
         DrawText(TextFormat("%f", GetTime()), 200, 220, 20, BLACK);
+        DrawText(TextFormat("%i", badguy1.GetHealth()), 200, 260, 20, BLACK);
+
+        int pamount = 0;
+
+        for (int i = 0; i < std::size(projectiles); i++) {
+            if (projectiles[i] != nullptr) {
+                if (projectiles[i]->IsActive()) {
+                    pamount++;
+                }
+            }
+        }
+
+        DrawText(TextFormat("%i", pamount), 200, 300, 20, BLACK);
 
         EndDrawing();
         //----------------------------------------------------------------------------------

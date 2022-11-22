@@ -19,3 +19,11 @@ void Enemy::Tick(float delta)
 	}
 
 }
+
+void Enemy::TakeDamage(int dmgTaken)
+{
+	health = health - dmgTaken;
+	if (health <= 0) {
+		currentState = State::Death;
+	}
+}

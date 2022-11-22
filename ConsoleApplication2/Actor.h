@@ -10,6 +10,8 @@ class Actor
 public:
 	Actor(float posX = 0.f, float posY = 0.f); // Initialize the actor, set default position to 0,0 if not specified
 
+	~Actor();
+
 	Vector2 GetPosition();	// Return the current position of the actor
 
 	Vector2 GetCenter(); 
@@ -28,9 +30,15 @@ public:
 
 	float GetDamping(); // Return the current damping value of the actor
 
+	int GetHealth();
+
 	bool IsActive(); // 
 
 	void SetActive(bool a);
+
+	void SetVelocity(Vector2 vel);
+
+	void SetPosition(Vector2 newPos);
 
 	void MoveTo(float posX, float posY);	// Set the position of the object to the specified coordinates
 
@@ -46,7 +54,7 @@ public:
 
 	void Turn(float turningRate, float delta);
 
-	void TakeDamage(int dmgTaken);	// Take the specified amount of damage to the actor's health. If health goes to or below 0, the actor goes to it's death state.
+	virtual void TakeDamage(int dmgTaken);	// Take the specified amount of damage to the actor's health. If health goes to or below 0, the actor goes to it's death state.
 
 protected:
 	Vector2 size = { 32, 32 }; // The size of the actor

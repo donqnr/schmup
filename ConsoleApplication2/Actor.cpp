@@ -8,6 +8,11 @@ Actor::Actor(float posX, float posY)
 	rect = { posX, posY, 32, 32 };
 }
 
+Actor::~Actor()
+{
+	UnloadTexture(spriteSheet);
+}
+
 Vector2 Actor::GetPosition()
 {
 	return pos;
@@ -43,14 +48,14 @@ float Actor::GetDamping()
 	return damping;
 }
 
+int Actor::GetHealth()
+{
+	return health;
+}
+
 bool Actor::IsActive()
 {
 	return active;
-}
-
-void Actor::SetActive(bool a)
-{
-	active = a;
 }
 
 Rectangle Actor::GetRect()
@@ -62,6 +67,22 @@ Texture2D Actor::GetSprite()
 {
 	return spriteSheet;
 }
+
+void Actor::SetVelocity(Vector2 vel)
+{
+	velocity = vel;
+}
+
+void Actor::SetPosition(Vector2 newPos)
+{
+	pos = newPos;
+}
+
+void Actor::SetActive(bool a)
+{
+	active = a;
+}
+
 
 void Actor::MoveTo(float posX, float posY)
 {

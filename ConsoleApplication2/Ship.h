@@ -14,6 +14,11 @@ public:
 
 	void Tick(float delta);
 
+	Rectangle GetWallSensorUp();
+	Rectangle GetWallSensorDn();
+	Rectangle GetWallSensorLeft();
+	Rectangle GetWallSensorRight();
+
 	void SetWeapon(Weapon* wpn, int wpnSlot);
 
 	Vector2* GetWeaponOffset(int slot);
@@ -24,11 +29,19 @@ public:
 	
 protected:
 
+	struct WallSensor {
+		Rectangle up;
+		Rectangle right;
+		Rectangle down;
+		Rectangle left;
+	};
+
 	struct WeaponSlot {			// Where the ship's regular weapons go
 		Vector2 offset = { 0,0 };	// The position where the bullets spawn from, relative to the ship. 0,0 is the center of the ship.
 		Weapon* wep;				// The weapon class
 	};
 	WeaponSlot weapons[3];		// Array for the weapon slots, different ships can have a varying amount of equippable weapons
+	WallSensor sensor;
 
 private:
 

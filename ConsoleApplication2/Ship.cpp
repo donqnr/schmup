@@ -10,6 +10,8 @@ Ship::Ship(float posX, float posY)
 	weapons[1].offset = { 32, 0 };
 	weapons[2].offset = { 16, 0 };
 
+	sensor.up = { posX,posY + 1 ,rect.x - 2,1 };
+	sensor.down = { posX,posY + rect.y + 1 ,rect.x - 2,1 };
 
 }
 
@@ -29,6 +31,30 @@ void Ship::Tick(float delta)
 	velocity.x = velocity.x / (1.0f + damping * delta);
 	velocity.y = velocity.y / (1.0f + damping * delta);
 	rect = { pos.x, pos.y, size.x, size.y };
+	sensor.up = { pos.x + 3,pos.y,size.x - 6, 1 };
+	sensor.down = { pos.x + 3,pos.y + size.y,size.x - 6, 1 };
+	sensor.left = { pos.x,pos.y + 3,1,size.y - 6 };
+	sensor.right = { pos.x + size.x,pos.y + 3,1,size.y - 6 };
+}
+
+Rectangle Ship::GetWallSensorUp()
+{
+	return sensor.up;
+}
+
+Rectangle Ship::GetWallSensorDn()
+{
+	return sensor.down;
+}
+
+Rectangle Ship::GetWallSensorLeft()
+{
+	return sensor.left;
+}
+
+Rectangle Ship::GetWallSensorRight()
+{
+	return sensor.right;
 }
 
 void Ship::SetWeapon(Weapon* wpn, int wpnSlot)
