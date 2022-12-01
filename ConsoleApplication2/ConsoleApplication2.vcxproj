@@ -150,6 +150,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Ship.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ConsoleApplication2.rc" />

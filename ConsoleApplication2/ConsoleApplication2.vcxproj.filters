@@ -48,6 +48,9 @@
     <ClCompile Include="EmptyWeapon.cpp">
       <Filter>Source Files\Weapons</Filter>
     </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor.h">
@@ -73,6 +76,9 @@
     </ClInclude>
     <ClInclude Include="EmptyWeapon.h">
       <Filter>Header Files\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
