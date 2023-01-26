@@ -2,13 +2,18 @@
 
 #include "raylib.h"
 
+
 // Base class for things like player ships, enemies and projectiles.
+
+class World; // Forward declaration for a game world pointer, so the actor can access functions of the world it inhabits
 
 class Actor
 {
 
 public:
 	Actor(float posX = 0.f, float posY = 0.f); // Initialize the actor, set default position to 0,0 if not specified
+
+	Actor(World* wrld, float posX = 0.f, float posY = 0.f);
 
 	~Actor();
 
@@ -32,6 +37,8 @@ public:
 
 	int GetHealth();
 
+	World* GetWorld();
+
 	bool IsActive(); // 
 
 	void SetActive(bool a);
@@ -39,6 +46,8 @@ public:
 	void SetVelocity(Vector2 vel);
 
 	void SetPosition(Vector2 newPos);
+
+	void SetWorld(World* wrld);
 
 	void MoveTo(float posX, float posY);	// Set the position of the object to the specified coordinates
 
@@ -57,6 +66,7 @@ public:
 	virtual void TakeDamage(int dmgTaken);	// Take the specified amount of damage to the actor's health. If health goes to or below 0, the actor goes to it's death state.
 
 protected:
+	
 	Vector2 size = { 32, 32 }; // The size of the actor
 	Vector2 pos = { 0, 0 };	// The current position of the object
 	Vector2 velocity = { 0, 0 }; // The current velocity of the actor
@@ -69,7 +79,9 @@ protected:
 	bool active = false;		// When true, update the actor (movement, collision, drawing etc). When false, do nothing with it, as if it didn't exist during gameplay, generally waiting to be deleted or replaced.
 	int maxHealth = 100;		// The maximum amount of health the actor can have.
 	int health = 100;			// The current health of the actor. Shouldn't go above maxHealth under normal conditions. Dropping to 0 or below causes the actor to go to it's death state.
+	World* parentWorld = nullptr;
 
 private:
 
+	
 };

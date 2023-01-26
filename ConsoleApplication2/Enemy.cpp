@@ -7,6 +7,14 @@ Enemy::Enemy(float posX, float posY)
 	rect = { posX, posY, 32, 32 };
 }
 
+Enemy::Enemy(World* wrld, float posX, float posY)
+{
+	pos = { posX,posY };
+	velocity = { 0,0 };
+	rect = { posX, posY, 32, 32 };
+	parentWorld = wrld;
+}
+
 void Enemy::Tick(float delta)
 {
 	switch (currentState) {

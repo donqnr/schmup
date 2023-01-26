@@ -23,7 +23,6 @@ public:
 
 	Vector2* GetWeaponOffset(int slot);
 
-	Weapon* GetWeapons();
 	Weapon* GetWeapon(int slot); // Get weapon from the selected weapon slot.
 	int GetWeaponAmount();
 	

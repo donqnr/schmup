@@ -1,7 +1,14 @@
-#include <iostream>
+
 #include "Actor.h"
 
 Actor::Actor(float posX, float posY)
+{
+	pos = { posX,posY };
+	velocity = { 0,0 };
+	rect = { posX, posY, 32, 32 };
+}
+
+Actor::Actor(World* wrld, float posX, float posY)
 {
 	pos = { posX,posY };
 	velocity = { 0,0 };
@@ -12,6 +19,7 @@ Actor::~Actor()
 {
 	UnloadTexture(spriteSheet);
 }
+
 
 Vector2 Actor::GetPosition()
 {
@@ -53,6 +61,11 @@ int Actor::GetHealth()
 	return health;
 }
 
+World* Actor::GetWorld()
+{
+	return parentWorld;
+}
+
 bool Actor::IsActive()
 {
 	return active;
@@ -76,6 +89,11 @@ void Actor::SetVelocity(Vector2 vel)
 void Actor::SetPosition(Vector2 newPos)
 {
 	pos = newPos;
+}
+
+void Actor::SetWorld(World* wrld)
+{
+	parentWorld = wrld;
 }
 
 void Actor::SetActive(bool a)

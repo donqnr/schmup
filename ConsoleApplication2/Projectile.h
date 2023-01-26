@@ -6,6 +6,8 @@ class Projectile :
 public:
     Projectile(float posX = 0.f, float posY = 0.f); // Initialize the actor, set default position to 0,0 if not specified
 
+    Projectile(World* wrld, float posX = 0.f, float posY = 0.f);
+
     virtual void Tick(float delta) override;
 
     void setParent(Actor* actor);

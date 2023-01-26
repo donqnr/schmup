@@ -8,6 +8,15 @@ Projectile::Projectile(float posX, float posY)
 	spawnTime = GetTime();
 }
 
+Projectile::Projectile(World* wrld, float posX, float posY)
+{
+	pos = { posX,posY };
+	velocity = { 0,0 };
+	rect = { posX, posY, 8, 8 };
+	parentWorld = wrld;
+	spawnTime = GetTime();
+}
+
 void Projectile::Tick(float delta)
 {
 	pos.y -= speed * delta;

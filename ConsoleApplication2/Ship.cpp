@@ -60,21 +60,11 @@ Rectangle Ship::GetWallSensorRight()
 void Ship::SetWeapon(Weapon* wpn, int wpnSlot)
 {
 	weapons[wpnSlot].wep = wpn;
-	std::cout << "cock";
 }
 
 Vector2* Ship::GetWeaponOffset(int slot)
 {
 	return &weapons[slot].offset;
-}
-
-Weapon* Ship::GetWeapons()
-{
-	static Weapon wpns[2];
-	for (int i = 0; i < std::size(weapons); i++) {
-		
-	}
-	return wpns;
 }
 
 Weapon* Ship::GetWeapon(int slot)
