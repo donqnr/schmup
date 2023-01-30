@@ -13,6 +13,8 @@ public:
 
     void TakeDamage(int dmgTaken);
 
+    void TestWorldPtr();
+
 private:
     enum State {
         Wait,

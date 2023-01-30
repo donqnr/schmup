@@ -1,5 +1,6 @@
 
 #include "Actor.h"
+#include "World.h"
 
 Actor::Actor(float posX, float posY)
 {

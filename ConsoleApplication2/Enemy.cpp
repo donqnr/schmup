@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "World.h"
 
 Enemy::Enemy(float posX, float posY)
 {
@@ -33,5 +34,12 @@ void Enemy::TakeDamage(int dmgTaken)
 	health = health - dmgTaken;
 	if (health <= 0) {
 		currentState = State::Death;
+	}
+}
+
+void Enemy::TestWorldPtr()
+{
+	if (parentWorld != nullptr) {
+		parentWorld->TestThing();
 	}
 }

@@ -1,4 +1,5 @@
 #include "Projectile.h"
+#include "World.h"
 
 Projectile::Projectile(float posX, float posY)
 {
@@ -23,6 +24,16 @@ void Projectile::Tick(float delta)
 	rect = { pos.x, pos.y, size.x, size.y };
 	if (GetTime() > (spawnTime + lifeSpan)) {
 		active = false;
+	}
+	if (parentWorld != nullptr) {
+		for (int i = 0; i < parentWorld->GetEnemyArraySize(); i++) {
+			if (parentWorld->GetEnemy(i) != nullptr) {
+				if (parentWorld->GetEnemy(i)->IsActive() && CheckCollisionRecs(this->GetRect(), parentWorld->GetEnemy(i)->GetRect())) {
+					parentWorld->GetEnemy(i)->TakeDamage(this->damage);
+					this->SetActive(false);
+				}
+			}
+		}
 	}
 }
 

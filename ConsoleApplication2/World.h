@@ -40,6 +40,8 @@ public:
 
 	void PurgeObstacles();
 
+	void TestThing();
+
 protected:
 
 private:

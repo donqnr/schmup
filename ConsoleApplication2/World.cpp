@@ -13,12 +13,10 @@ World::~World()
 
 void World::Tick(float delta)
 {
-    ProjectileCollision();
-
     playerShip.Tick(delta);
 
     for (Projectile* proj : projectiles) {
-        if (proj != nullptr) {
+        if (proj != nullptr) { // Check to avoid referencing a null pointer
             if (proj->IsActive()) {
                 proj->Tick(delta);
             }
@@ -171,4 +169,9 @@ void World::PurgeObstacles()
     for (Rectangle* rect : obstacles) {
         delete rect;
     }
+}
+
+void World::TestThing()
+{
+    std::cout << "cocks";
 }
