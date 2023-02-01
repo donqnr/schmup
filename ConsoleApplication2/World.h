@@ -16,7 +16,7 @@ public:
 
 	void ProjectileCollision();
 
-	void SpawnProjectile(float posX, float posY);
+	void SpawnProjectile(float posX, float posY, Actor* parent);
 
 	void SpawnEnemy(float posX, float posY);
 

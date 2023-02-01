@@ -99,7 +99,8 @@ int main(void)
                 if (world.GetPlayerShip()->GetWeapon(i)->CanFire()) {
                     world.SpawnProjectile(
                         world.GetPlayerShip()->GetPosition().x + world.GetPlayerShip()->GetWeaponOffset(i)->x,
-                        world.GetPlayerShip()->GetPosition().y + world.GetPlayerShip()->GetWeaponOffset(i)->y
+                        world.GetPlayerShip()->GetPosition().y + world.GetPlayerShip()->GetWeaponOffset(i)->y,
+                        world.GetPlayerShip()
                     );
                     world.GetPlayerShip()->GetWeapon(i)->Fire();
                 }

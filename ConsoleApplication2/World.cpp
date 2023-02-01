@@ -52,21 +52,19 @@ void World::ProjectileCollision()
     }
 }
 
-void World::SpawnProjectile(float posX, float posY)
+void World::SpawnProjectile(float posX, float posY, Actor* parent)
 {
     for (int i = 0; i < std::size(projectiles); i++) {
         if (projectiles[i] != nullptr) {    // Checking for null pointers so they aren't referenced
             if (!projectiles[i]->IsActive()) {
                 delete projectiles[i];
                 projectiles[i] = new Projectile(this, posX - 4, posY);
-                //projectiles[i]->setParent(&playerShip);
                 projectiles[i]->SetActive(true);
                 break;
             }
         }
         else if (projectiles[i] == nullptr) {
             projectiles[i] = new Projectile(this, posX - 4, posY);
-            //projectiles[i]->setParent(&playerShip);
             projectiles[i]->SetActive(true);
             break;
         }
