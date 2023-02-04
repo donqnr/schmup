@@ -16,7 +16,7 @@ public:
 protected:
 	Projectile projectile; // Which projetile the weapon fires
 	float firerate = 0.5f; // Cooldown time in seconds between shots
-	float lastFiredAt = 0.0f;
+	float lastFiredAt = 0.0f; // 
 	bool firing = false;
 
 private:

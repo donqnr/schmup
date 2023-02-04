@@ -95,6 +95,9 @@ int main(void)
 
         if (IsKeyDown(KEY_LEFT_CONTROL))
         {
+
+            world.GetPlayerShip()->FireWeapons();
+            /*
             for (int i = 0; i < world.GetPlayerShip()->GetWeaponAmount(); i++) { // Player firing his weapons
                 if (world.GetPlayerShip()->GetWeapon(i)->CanFire()) {
                     world.SpawnProjectile(
@@ -105,6 +108,7 @@ int main(void)
                     world.GetPlayerShip()->GetWeapon(i)->Fire();
                 }
             }
+            */
         }
 
 

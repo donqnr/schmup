@@ -1,8 +1,11 @@
 #include <iostream>
 #include "Ship.h"
+#include "World.h"
 
-Ship::Ship(float posX, float posY)
+Ship::Ship(World* wrld, float posX, float posY)
 {
+	parentWorld = wrld;
+
 	pos = { posX,posY };
 	velocity = { 0,0 };
 	rect = { posX, posY, 32, 32 };
@@ -15,13 +18,20 @@ Ship::Ship(float posX, float posY)
 
 }
 
-void Ship::StartAttack()
+void Ship::FireWeapons()
 {
-	//std::cout << "Pew";
-}
-
-void Ship::EndAttack()
-{
+	for (WeaponSlot wpn : weapons) {
+		if (wpn.wep != nullptr) {
+			if (wpn.wep->CanFire()) {
+				parentWorld->SpawnProjectile(
+					this->pos.x + wpn.offset.x,
+					this->pos.y + wpn.offset.y,
+					this
+				);
+				wpn.wep->Fire();
+			}
+		}
+	}
 }
 
 void Ship::Tick(float delta)

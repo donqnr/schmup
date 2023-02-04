@@ -45,7 +45,7 @@ public:
 protected:
 
 private:
-	Ship playerShip = Ship(640, 600);
+	Ship playerShip = Ship(this, 640, 600);
 
 	Projectile* projectiles[2048]{};
 
