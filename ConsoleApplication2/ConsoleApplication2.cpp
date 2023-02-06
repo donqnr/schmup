@@ -1,18 +1,3 @@
-
-
-/*******************************************************************************************
-*
-*   raylib [core] examples - basic screen manager
-*
-*   This example illustrates a very simple screen manager based on a states machines
-*
-*   This test has been created using raylib 1.1 (www.raylib.com)
-*   raylib is licensed under an unmodified zlib/libpng license (View raylib.h for details)
-*
-*   Copyright (c) 2021 Ramon Santamaria (@raysan5)
-*
-********************************************************************************************/
-
 #include <memory>
 #include <iostream>
 #include "raylib.h"
@@ -23,11 +8,6 @@
 #include "Enemy.h"
 #include "HeavyMachineGun.h"
 #include "World.h"
-
-//------------------------------------------------------------------------------------------
-// Functions
-//------------------------------------------------------------------------------------------
-
 
 //------------------------------------------------------------------------------------------
 // Main entry point
@@ -70,8 +50,6 @@ int main(void)
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 
-    // TODO: Initialize all required variables and load all required data here!
-
     SetTargetFPS(10000);               // Set the framerate cap to a high number, the intention is for the game to behave the same regardless of the framerate.
     //--------------------------------------------------------------------------------------
 
@@ -95,20 +73,7 @@ int main(void)
 
         if (IsKeyDown(KEY_LEFT_CONTROL))
         {
-
             world.GetPlayerShip()->FireWeapons();
-            /*
-            for (int i = 0; i < world.GetPlayerShip()->GetWeaponAmount(); i++) { // Player firing his weapons
-                if (world.GetPlayerShip()->GetWeapon(i)->CanFire()) {
-                    world.SpawnProjectile(
-                        world.GetPlayerShip()->GetPosition().x + world.GetPlayerShip()->GetWeaponOffset(i)->x,
-                        world.GetPlayerShip()->GetPosition().y + world.GetPlayerShip()->GetWeaponOffset(i)->y,
-                        world.GetPlayerShip()
-                    );
-                    world.GetPlayerShip()->GetWeapon(i)->Fire();
-                }
-            }
-            */
         }
 
 
@@ -153,20 +118,6 @@ int main(void)
             }
         }
 
-/*          // Draw Player
-            DrawTexturePro(triangle,
-                sourceRec,
-                {
-                    thing.GetRect().x + 16,
-                    thing.GetRect().y + 16,
-                    thing.GetRect().width,
-                    thing.GetRect().height
-                },
-                { 16 , 16 },
-                thing.GetAngle(),
-                WHITE);
-                */
-
        for (int i = 0; i < world.GetProjectileArraySize(); i++) {
                 if (world.GetProjectile(i) != nullptr) {    // Check for a null pointer, so it won't get referenced
                     if (world.GetProjectile(i)->IsActive()) {
@@ -176,17 +127,6 @@ int main(void)
             }
             
         EndMode2D();
-
-        //DrawTexture(triangle, thing.GetPosition().x, thing.GetPosition().y, WHITE);
-
-        /*
-        DrawRectangleRec(thing.GetWallSensorUp(), RED);
-        DrawRectangleRec(thing.GetWallSensorDn(), RED);
-        DrawRectangleRec(thing.GetWallSensorLeft(), RED);
-        DrawRectangleRec(thing.GetWallSensorRight(), RED);
-        */
-
-
 
         DrawText(TextFormat("%f", GetTime()), 200, 220, 20, BLACK);
         DrawText(TextFormat("%i", world.GetEnemy(0)->GetHealth()), 200, 260, 20, BLACK);
