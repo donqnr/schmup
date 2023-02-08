@@ -86,3 +86,11 @@ int Ship::GetWeaponAmount()
 {
 	return std::size(weapons);
 }
+
+void Ship::TakeDamage(int dmgTaken)
+{
+	health -= dmgTaken;
+	if (health <= 0) {
+		currentState = State::Death;
+	}
+}

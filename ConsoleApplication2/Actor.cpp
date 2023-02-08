@@ -142,5 +142,10 @@ void Actor::Turn(float turnRate, float delta)
 
 void Actor::TakeDamage(int dmgTaken)
 {
-	health = -dmgTaken;
+	health -= dmgTaken;
+}
+
+void Actor::DealDamage(int dmgDealt, Actor* victim)
+{
+	victim->TakeDamage(dmgDealt);
 }

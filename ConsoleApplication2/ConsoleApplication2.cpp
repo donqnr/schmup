@@ -129,7 +129,7 @@ int main(void)
         EndMode2D();
 
         DrawText(TextFormat("%f", GetTime()), 200, 220, 20, BLACK);
-        DrawText(TextFormat("%i", world.GetEnemy(0)->GetHealth()), 200, 260, 20, BLACK);
+        DrawText(TextFormat("%i", world.GetPlayerShip()->GetHealth()), 200, 260, 20, BLACK);
 
         int pamount = 0;
 

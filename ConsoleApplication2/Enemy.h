@@ -13,16 +13,20 @@ public:
 
     void TakeDamage(int dmgTaken);
 
-    void TestWorldPtr();
+    void ContactDamage();
+
+    int GetHealth() override;
 
 private:
-    enum State {
+    enum class State {
         Wait,
-        Chase,
+        Active,
         Death,
     };
     State currentState = State::Wait;
 
     Actor* target = nullptr;
+
+    int health = 10;
 };
 

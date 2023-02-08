@@ -35,7 +35,7 @@ public:
 
 	float GetDamping(); // Return the current damping value of the actor
 
-	int GetHealth();
+	virtual int GetHealth();
 
 	World* GetWorld();
 
@@ -64,6 +64,8 @@ public:
 	void Turn(float turningRate, float delta);
 
 	virtual void TakeDamage(int dmgTaken);	// Take the specified amount of damage to the actor's health. If health goes to or below 0, the actor goes to it's death state.
+
+	virtual void DealDamage(int dmgDealt, Actor* victim);
 
 protected:
 	

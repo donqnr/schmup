@@ -24,6 +24,8 @@ public:
 
 	Weapon* GetWeapon(int slot); // Get weapon from the selected weapon slot.
 	int GetWeaponAmount();
+
+	void TakeDamage(int dmgTaken) override;
 	
 protected:
 
@@ -41,6 +43,14 @@ protected:
 	WeaponSlot weapons[3];		// Array for the weapon slots, different ships can have a varying amount of slots that they can equip weapons to
 	WallSensor sensor;
 
+	
+
 private:
+
+	enum class State {
+		Active,
+		Death,
+	};
+	State currentState = State::Active;
 
 };
